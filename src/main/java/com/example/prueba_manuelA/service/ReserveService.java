@@ -15,7 +15,7 @@ public class ReserveService {
     private ReserveRepository iReserveRepository;
 
     public ReserveModel saveReserve (ReserveModel reserve) {
-        String idStr = String.valueOf(reserve.getId_reserve());
+        String idStr = String.valueOf(reserve.getIdReserve());
         if (StringUtils.isNotBlank(idStr)) {
             return iReserveRepository.save(reserve);
         }
@@ -34,8 +34,8 @@ public class ReserveService {
         return iReserveRepository.findById(id);
     }
     public ReserveModel editReserve (ReserveModel reserve){
-        String idStr = String.valueOf(reserve.getId_reserve());
-        if (StringUtils.isNotBlank(idStr) && iReserveRepository.existsById(reserve.getId_reserve())){
+        String idStr = String.valueOf(reserve.getIdReserve());
+        if (StringUtils.isNotBlank(idStr) && iReserveRepository.existsById(reserve.getIdReserve())){
             return iReserveRepository.save(reserve);
         }
         return null;

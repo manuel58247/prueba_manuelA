@@ -13,9 +13,12 @@ import com.example.prueba_manuelA.model.DinnerModel;
 public class MenuDinnerModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_menu_dinner;
-    private Long id_menu;
-    private Long id_dinner;
+    @Column(name = "id_menu_dinner", nullable = false)
+    private Long idMenuDinner;
+    @Column(name = "id_menu", nullable = false)
+    private Long idMenu;
+    @Column(name = "id_dinner", nullable = false)
+    private Long idDinner;
     @NotNull(message="Es requerida el menu")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_menu_dinner_menu", nullable = false)

@@ -1,29 +1,35 @@
 package com.example.prueba_manuelA.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.prueba_manuelA.dto.DinnerDto;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Data
-@Entity(name ="dinner")
+@Entity(name = "dinner")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class DinnerModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_dinner;
-    @Size(min=3,max=50,message= "El nombre de la cena debe ser entre 5 y 50 caracteres")
-    @NotBlank(message= "El nombre del menu no puede ser vacio ni nulo")
-    @NotNull(message= "El nombre del menu no puede ser vacio ni nulo")
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id_dinner", nullable = false)
+    private UUID idDinner;
+    @Column(nullable = false, length = 150)
     private String name;
-    @Size(min=1,max=50,message= "La descripcion de la cena debe ser entre 1 y 50 caracteres")
-    @NotBlank(message= "La descripcion de la cena no puede ser vacia")
-    @NotNull(message= "La descripcion de la cena no puede ser nula")
-    @NotEmpty(message= "La descripcion de la cena no puede ser vacia")
+    @Column(nullable = false)
     private String description;
-    @NotNull ()
-    private double price;
+    @Column(nullable = false)
+    private BigDecimal price;
+
+    public DinnerModel(DinnerDto dinnerDto) {
+        this.name = dinnerDto.getName();
+        this.description =  dinnerDto.getDescription();
+        this.price = dinnerDto.getPrice();
+    }
 }

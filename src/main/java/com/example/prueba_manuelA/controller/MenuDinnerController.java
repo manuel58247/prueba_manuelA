@@ -18,18 +18,6 @@ import java.util.List;
 public class MenuDinnerController {
     @Autowired
     private MenuDinnerService iMenuDinnerService;
-//    @GetMapping()
-//    public String inicio(Model model) {
-//        try {
-//            List<MenuDinnerModel> videojuegos = this.iMenuDinnerService.findAll();
-//            model.addAttribute("videojuegos", videojuegos);
-//
-//            return "views/inicio";
-//        } catch (Exception e) {
-//            model.addAttribute("error", e.getMessage());
-//            return "error";
-//        }
-//    }
     @GetMapping
     public ResponseEntity<Page<MenuDinnerModel>> getAllDinner (
             @RequestParam(required = false, defaultValue = "0") Integer page,

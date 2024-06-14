@@ -15,7 +15,7 @@ public class MenuServise {
     private MenuRepository iMenuRepository;
 
     public MenuModel saveMenu (MenuModel menu) {
-        String idStr = String.valueOf(menu.getId_menu());
+        String idStr = String.valueOf(menu.getIdMenu());
         if (StringUtils.isNotBlank(idStr)) {
             return iMenuRepository.save(menu);
         }
@@ -34,8 +34,8 @@ public class MenuServise {
         return iMenuRepository.findById(id);
     }
     public MenuModel editMenu (MenuModel menu){
-        String idStr = String.valueOf(menu.getId_menu());
-        if (StringUtils.isNotBlank(idStr) && iMenuRepository.existsById(menu.getId_menu())){
+        String idStr = String.valueOf(menu.getIdMenu());
+        if (StringUtils.isNotBlank(idStr) && iMenuRepository.existsById(menu.getIdMenu())){
             return iMenuRepository.save(menu);
         }
         return null;
