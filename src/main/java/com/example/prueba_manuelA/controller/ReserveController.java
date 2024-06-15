@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,8 +27,6 @@ public class ReserveController {
 
     @Autowired
     private ReserveService reserveService;
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
     @PostMapping
     public ResponseEntity<ReserveModel> saveReserve( @RequestBody @Valid ReserveDto reserveDto) {
@@ -50,7 +47,6 @@ public class ReserveController {
         reserveService.deleteReserve(id);
         return ResponseEntity.ok(!reserveService.existById(id));
     }
-
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Optional<ReserveModel>> findReservetById(@PathVariable("id") UUID id) {

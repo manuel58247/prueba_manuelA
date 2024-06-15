@@ -25,4 +25,15 @@ public class GlobalExceptionHandler {
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleInternalServerError(Exception ex) {
+        // Loguear la excepción para tener un registro
+        ex.printStackTrace(); // o logger.error("Mensaje", ex);
+
+        // Devolver una respuesta HTTP 500 con un mensaje apropiado
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Ocurrió un error interno en el servidor. Por favor, inténtalo de nuevo más tarde.");
+    }
 }
