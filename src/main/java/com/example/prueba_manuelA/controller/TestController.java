@@ -15,9 +15,9 @@ public class TestController {
     public String testConnection() {
         try {
             jdbcTemplate.execute("SELECT 1");
-            return "Conexión exitosa a PostgreSQL";
+            return "Conexión exitosa a SQL";
         } catch (Exception e) {
-            return "Error al conectar a PostgreSQL: " + e.getMessage();
+            return "Error al conectar a SQL: " + e.getMessage();
         }
     }
 }

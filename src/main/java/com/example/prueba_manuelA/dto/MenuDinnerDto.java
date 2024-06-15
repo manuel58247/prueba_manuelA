@@ -1,16 +1,13 @@
 package com.example.prueba_manuelA.dto;
 
-import com.example.prueba_manuelA.model.DinnerModel;
-import com.example.prueba_manuelA.model.MenuModel;
-import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
+import java.util.UUID;
+@Data
 public class MenuDinnerDto {
-    @NotNull(message = "El ID del menú no puede ser nulo")
-    private Long idMenu;
-    @NotNull(message = "El ID de la cena no puede ser nulo")
-    private Long idDinner;
-    @Valid
-    private DinnerModel dinnerModel;
+    @NotNull(message = "El id del menú no puede ser nulo")
+    private UUID idMenu;
+    @NotNull(message = "El id de la cena no puede ser nulo")
+    private UUID idDinner;
 }

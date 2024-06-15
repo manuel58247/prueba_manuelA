@@ -1,9 +1,18 @@
 package com.example.prueba_manuelA.model;
 
 import com.example.prueba_manuelA.dto.DinnerDto;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -32,4 +41,5 @@ public class DinnerModel {
         this.description =  dinnerDto.getDescription();
         this.price = dinnerDto.getPrice();
     }
+
 }

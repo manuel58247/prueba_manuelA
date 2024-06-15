@@ -1,36 +1,54 @@
 package com.example.prueba_manuelA.model;
 
 import com.example.prueba_manuelA.dto.ReserveDto;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @Entity(name ="reserve")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ReserveModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_reserve", nullable = false)
-    private Long idReserve;
+    private UUID idReserve;
     @Column(name = "customer_name", nullable = false, length = 150)
     private String customerName;
     @Column(name = "customer_number", nullable = false, length = 25)
     private String customerNumber;
     @Column(name = "date_reserve", nullable = false)
     private Date dateReserve;
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private String state;
-    @Column(name = "id_menu", nullable = false)
-    private Long idMenu;
+    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private Boolean state;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_reserve_menu", nullable = false)
+    private MenuModel menuModel;
 
-    public ReserveModel(ReserveDto reserveDto) {
+    public ReserveModel(ReserveDto reserveDto, MenuModel menuModel) {
         this.customerName = reserveDto.getCustomerName();
         this.customerNumber = reserveDto.getCustomerNumber();
         this.dateReserve = reserveDto.getDateReserve();
-        this.state = state;
-        this.idMenu = idMenu;
+        this.state = reserveDto.getState();
+        this.menuModel = menuModel;
     }
 }

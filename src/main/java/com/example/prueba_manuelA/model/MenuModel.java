@@ -1,17 +1,34 @@
 package com.example.prueba_manuelA.model;
 
-import jakarta.persistence.*;
+import com.example.prueba_manuelA.dto.MenuDto;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Data
 @Entity (name = "menu")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class MenuModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_dinner")
-    private Long idMenu;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id_menu")
+    private UUID idMenu;
     @Column(nullable = false, length = 150)
     private String name;
     @Column(nullable = false)
@@ -19,9 +36,9 @@ public class MenuModel {
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean state;
 
-    public MenuModel(MenuModel menuModel) {
-        this.name = menuModel.getName();
-        this.price = menuModel.getPrice();
-        this.state = menuModel.getState();
+    public MenuModel(MenuDto menuDto) {
+        this.name = menuDto.getName();
+        this.price = menuDto.getPrice();
+        this.state = menuDto.getState();
     }
 }

@@ -1,6 +1,6 @@
 package com.example.prueba_manuelA.controller;
 
-import com.example.prueba_manuelA.model.DinnerModel;
+import com.example.prueba_manuelA.dto.MenuDto;
 import com.example.prueba_manuelA.model.MenuModel;
 import com.example.prueba_manuelA.service.MenuServise;
 import jakarta.validation.Valid;
@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/menu")
@@ -28,12 +27,11 @@ public class MenuController {
 
     @Autowired
     private MenuServise menuServise;
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
     @PostMapping
-    public ResponseEntity<MenuModel> saveMenu (@Valid @RequestBody MenuModel menuModel, BindingResult bindingResult) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(menuServise.saveMenu(menuModel));
+    public ResponseEntity<MenuModel> saveMenu (@RequestBody @Valid MenuDto menuDto) {
+        MenuModel savedMenu = menuServise.saveMenu(menuDto);
+        return new ResponseEntity<>(savedMenu, HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -45,18 +43,20 @@ public class MenuController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity deleteMenu(@PathVariable ("id") Long id){
+    public ResponseEntity deleteMenu(@PathVariable ("id") UUID id){
         menuServise.deleteMenu(id);
         return ResponseEntity.ok(!menuServise.existById(id));
     }
 
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Optional<MenuModel>> findMenuById(@PathVariable ("id") Long id){
+    public ResponseEntity<Optional<MenuModel>> findMenuById(@PathVariable ("id") UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(menuServise.findById(id));
     }
-    @PutMapping
-    public ResponseEntity<MenuModel> editMenu (@RequestBody MenuModel reserveModel) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(menuServise.editMenu(reserveModel));
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<MenuModel> editMenu (@PathVariable UUID id,@RequestBody @Valid MenuDto menuDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(menuServise.editMenu(id,menuDto));
+
     }
+
 }
